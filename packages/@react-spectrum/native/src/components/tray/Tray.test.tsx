@@ -29,6 +29,20 @@ describe('Tray', () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
+  it('does not close on hardware back when not dismissable', () => {
+    let onOpenChange = jest.fn();
+    let {root} = renderWithProvider(
+      <Tray isDismissable={false} isOpen onOpenChange={onOpenChange} testID="t">
+        <></>
+      </Tray>
+    );
+    let host = root.findAll(
+      n => typeof n.type === 'string' && (n.props as any).testID === 't'
+    )[0];
+    fireEvent(host, 'onRequestClose');
+    expect(onOpenChange).not.toHaveBeenCalled();
+  });
+
   it('renders dialog role on inner content', () => {
     let {root} = renderWithProvider(
       <Tray isOpen onOpenChange={() => {}} testID="t">

@@ -42,6 +42,20 @@ describe('Modal', () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
+  it('does not close on hardware back when not dismissable', () => {
+    let onOpenChange = jest.fn();
+    let {root} = renderWithProvider(
+      <Modal isDismissable={false} isOpen onOpenChange={onOpenChange} testID="m">
+        <></>
+      </Modal>
+    );
+    let host = root.findAll(
+      n => typeof n.type === 'string' && (n.props as any).testID === 'm'
+    )[0];
+    fireEvent(host, 'onRequestClose');
+    expect(onOpenChange).not.toHaveBeenCalled();
+  });
+
   it('renders dialog role on inner content', () => {
     let {root} = renderWithProvider(
       <Modal isOpen onOpenChange={() => {}} testID="m">

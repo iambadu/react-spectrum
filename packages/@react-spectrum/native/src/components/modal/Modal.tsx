@@ -32,14 +32,14 @@ export const Modal = forwardRef<React.ElementRef<typeof RNView>, ModalProps>(
     } = props;
 
     let close = useCallback(() => {
-      onOpenChange?.(false);
-    }, [onOpenChange]);
+      if (isDismissable) {
+        onOpenChange?.(false);
+      }
+    }, [isDismissable, onOpenChange]);
 
     let handleScrimPress = useCallback(() => {
-      if (isDismissable) {
-        close();
-      }
-    }, [close, isDismissable]);
+      close();
+    }, [close]);
 
     return (
       <RNModal

@@ -1,4 +1,5 @@
 import React from 'react';
+import {AccessibilityInfo} from 'react-native';
 import {act, create} from 'react-test-renderer';
 import {FocusScope} from './FocusScope';
 import {Text} from './Text';
@@ -29,5 +30,39 @@ describe('FocusScope', () => {
         );
       });
     }).not.toThrow();
+  });
+
+  it('marks contained scopes as modal accessibility regions', () => {
+    let renderer: any;
+    act(() => {
+      renderer = create(
+        <FocusScope contain>
+          <Text>Item</Text>
+        </FocusScope>
+      );
+    });
+    let scope = renderer.root.findAll(
+      (n: any) => typeof n.type === 'string' && n.props.accessibilityViewIsModal
+    )[0];
+    expect(scope.props.importantForAccessibility).toBe('yes');
+  });
+
+  it('moves accessibility focus when autoFocus is enabled', () => {
+    let spy = jest.spyOn(AccessibilityInfo, 'setAccessibilityFocus');
+    try {
+      act(() => {
+        create(
+          <FocusScope autoFocus>
+            <Text>Item</Text>
+          </FocusScope>,
+          {
+            createNodeMock: () => ({})
+          }
+        );
+      });
+      expect(spy).toHaveBeenCalledWith(1);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });

@@ -25,6 +25,11 @@ describe('mapAccessibilityProps', () => {
     expect(result.accessibilityState.selected).toBe(true);
   });
 
+  it('maps isInvalid to aria-invalid', () => {
+    let result = mapAccessibilityProps({isInvalid: true});
+    expect(result['aria-invalid']).toBe(true);
+  });
+
   it('omits false flags (no undefined pollution)', () => {
     let result = mapAccessibilityProps({isDisabled: false});
     expect(result.accessibilityState.disabled).toBeUndefined();
@@ -32,14 +37,9 @@ describe('mapAccessibilityProps', () => {
 });
 
 describe('mapAccessibilityState', () => {
-  it('maps isInvalid', () => {
-    expect(mapAccessibilityState({isInvalid: true}).invalid).toBe(true);
-  });
-
   it('all false → all undefined', () => {
     let state = mapAccessibilityState({});
     expect(state.disabled).toBeUndefined();
-    expect(state.invalid).toBeUndefined();
     expect(state.selected).toBeUndefined();
   });
 });

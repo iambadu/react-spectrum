@@ -31,6 +31,15 @@ describe('Checkbox', () => {
     expect(findCheckbox(root).props.accessibilityState.checked).toBe('mixed');
   });
 
+  it('reports invalid via aria-invalid', () => {
+    let {root} = renderWithProvider(
+      <Checkbox isInvalid testID="cb">
+        Subscribe
+      </Checkbox>
+    );
+    expect(findCheckbox(root).props['aria-invalid']).toBe(true);
+  });
+
   it('does not toggle when readOnly', () => {
     let onChange = jest.fn();
     let {root} = renderWithProvider(
@@ -58,5 +67,20 @@ describe('CheckboxGroup', () => {
     );
     fireEvent.press(findCheckbox(root, 'a'));
     expect(onChange).toHaveBeenCalledWith(['a']);
+  });
+
+  it('propagates aria-invalid to the group and children', () => {
+    let {root} = renderWithProvider(
+      <CheckboxGroup isInvalid label="Pick" testID="group">
+        <Checkbox testID="a" value="a">
+          A
+        </Checkbox>
+      </CheckboxGroup>
+    );
+    let group = root.findAll(
+      (n: any) => typeof n.type === 'string' && n.props && n.props.testID === 'group'
+    )[0];
+    expect(group.props['aria-invalid']).toBe(true);
+    expect(findCheckbox(root, 'a').props['aria-invalid']).toBe(true);
   });
 });
