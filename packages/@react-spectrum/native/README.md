@@ -25,14 +25,16 @@ This package is still early, but it now includes a working native surface rather
 - toggle controls: `Checkbox`, `CheckboxGroup`, `Radio`, `RadioGroup`, `Switch`
 - feedback components: `InlineAlert`, `ProgressBar`, `ProgressCircle`, `Meter`, `Toast`, `ToastContainer`, `ToastQueue`
 - overlays: `Modal`, `Dialog`, `AlertDialog`, `Popover`, `Tooltip`, `Tray`
-- collections and navigation: `ListBox`, `Picker`, `Menu`, `ActionMenu`, `Tabs`, `ComboBox`, `ListView`, `TableView`, `TreeView`
-- advanced inputs and mobile-native additions: `NumberField`, `Slider`, `RangeSlider`, `Calendar`, `RangeCalendar`, `DatePicker`, `DateRangePicker`, `ColorSwatch`, `ColorField`, `Avatar`, `Tag`, `TagGroup`
+- collections and navigation: `Accordion`, `Disclosure`, `DisclosureTitle`, `DisclosurePanel`, `Breadcrumbs`, `ListBox`, `Picker`, `Menu`, `ActionMenu`, `Tabs`, `ComboBox`, `ListView`, `TableView`, `TreeView`
+- data display: `Image`, `IllustratedMessage`, `LabeledValue`
+- advanced inputs and mobile-native additions: `NumberField`, `Slider`, `RangeSlider`, `Calendar`, `RangeCalendar`, `DateField`, `TimeField`, `DatePicker`, `DateRangePicker`, `ColorSwatch`, `ColorField`, `Avatar`, `Tag`, `TagGroup`
 
 ## Scope Notes
 
 - This package does not try to reuse DOM-oriented React Spectrum runtime code.
 - Some web Spectrum exports are still missing or intentionally deferred for native.
 - The current status matrix lives in `docs/native-component-gap-analysis.md`.
+- The validation and smoke-app workflow lives in `docs/native-validation-and-example-app.md`.
 
 ## Validation
 

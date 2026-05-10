@@ -21,11 +21,11 @@ Status values:
 | --- | --- | --- | --- | --- |
 | Provider/theme | `Provider`, `useProvider`, themes | audit | Implemented with native theme defaults and overlay root. Needs example app and tests. | Foundation |
 | Primitive rendering | `View`, `Text`, style props | audit | Native `View`, `Text`, `Pressable`, style props, `cn`, and variants exist. | Foundation |
-| Overlay root | `DialogContainer`, overlay internals | scaffold | `PortalProvider`, `Overlay`, and `FocusScope` exist. Portal now supports layers and Android back dismissal, but modal isolation/focus are still limited. | Overlay |
-| Button family | `Button`, `ActionButton`, `ToggleButton` | audit | Implemented. Needs tests for disabled, pending, pressed, selected, and icon-label behavior. | Core controls |
+| Overlay root | `DialogContainer`, overlay internals | scaffold | `PortalProvider`, `Overlay`, and `FocusScope` exist. Portal supports layers and Android back dismissal. Modal/tray dismissal respects `isDismissable`; FocusScope now provides initial modal accessibility containment and focus handoff, but full focus trapping still needs deeper review. | Overlay |
+| Button family | `Button`, `ActionButton`, `ToggleButton` | audit | Implemented. Disabled, pending, read-only, and selected behavior have focused tests; pressed and icon-label behavior still need deeper review. | Core controls |
 | Text/layout/display | `Text`, `Heading`, `Flex`, `Divider`, `Badge`, `StatusLight` | audit | Implemented. `Grid`, `Well`, `Content`, `Header`, and `Footer` are missing/deferred. | Core controls |
-| Fields | `TextField`, `TextArea`, `SearchField` | audit | Implemented. Needs controlled/uncontrolled and native keyboard behavior tests. | Core controls |
-| Toggles | `Checkbox`, `CheckboxGroup`, `Radio`, `RadioGroup`, `Switch` | audit | Implemented using `react-stately`. Needs group and accessibility-state tests. | Core controls |
+| Fields | `TextField`, `TextArea`, `SearchField` | audit | Implemented. Controlled/uncontrolled behavior, provider-disabled state, invalid accessibility mapping, textarea multiline behavior, and SearchField keyboard/clear behavior have focused tests. | Core controls |
+| Toggles | `Checkbox`, `CheckboxGroup`, `Radio`, `RadioGroup`, `Switch` | audit | Implemented using `react-stately`. Selection, disabled, read-only, checked, mixed, and invalid accessibility behavior have focused tests across Checkbox, Radio, and Switch. | Core controls |
 | Progress/feedback | `ProgressBar`, `ProgressCircle`, `Meter`, `InlineAlert` | audit | Implemented. Toast surface is also implemented and tested. | Core controls |
 | Dialogs | `Dialog`, `AlertDialog`, `DialogTrigger`, `DialogContainer` | implemented/audit | `Dialog` and `AlertDialog` are exported. Trigger/container parity with web remains partial. | Overlay |
 | Toasts | `ToastContainer`, `ToastQueue` | implemented/audit | Queue and container are exported. Timing, announcements, and UX still need hardening. | Overlay |
@@ -35,10 +35,10 @@ Status values:
 | Tabs | `Tabs`, `TabList`, `TabPanels` | implemented/audit | Exported with native selection state; deeper parity work remains. | Collections |
 | ComboBox | `ComboBox` | implemented/audit | Exported and built on text input plus tray/listbox composition. | Advanced inputs |
 | Table | `TableView`, `TableHeader`, `TableBody`, `Column`, `Row`, `Cell` | implemented/audit | `TableView` is exported as the current native table surface. Web subcomponent parity is not complete. | Deferred |
-| Date/time | `Calendar`, `RangeCalendar`, `DateField`, `DatePicker`, `DateRangePicker`, `TimeField` | partial | `Calendar`, `RangeCalendar`, `DatePicker`, and `DateRangePicker` are exported. `DateField` and `TimeField` remain absent. | Advanced inputs |
+| Date/time | `Calendar`, `RangeCalendar`, `DateField`, `DatePicker`, `DateRangePicker`, `TimeField` | implemented/audit | `Calendar`, `RangeCalendar`, `DateField`, `TimeField`, `DatePicker`, and `DateRangePicker` are exported. Field input parsing is intentionally text-based and should receive deeper locale/segment parity review. | Advanced inputs |
 | Number/slider | `NumberField`, `Slider`, `RangeSlider` | implemented/audit | Exported with native interactions and tests. | Advanced inputs |
-| Accordion | `Accordion`, `Disclosure`, `DisclosurePanel`, `DisclosureTitle` | missing | Implement after basic selection and animation patterns. | Collections |
-| Navigation/data display | `Breadcrumbs`, `ListView`, `TreeView`, `TagGroup`, `Avatar`, `Image`, `IllustratedMessage`, `LabeledValue` | partial | `ListView`, `TreeView`, `TagGroup`, and `Avatar` are exported. The rest remain missing or deferred. | Later |
+| Accordion | `Accordion`, `Disclosure`, `DisclosurePanel`, `DisclosureTitle` | implemented/audit | Exported with controlled/uncontrolled expansion, disabled keys, single and multiple expansion tests. Animation and deeper keyboard parity remain future work. | Collections |
+| Navigation/data display | `Breadcrumbs`, `ListView`, `TreeView`, `TagGroup`, `Avatar`, `Image`, `IllustratedMessage`, `LabeledValue` | implemented/audit | `Breadcrumbs`, `ListView`, `TreeView`, `TagGroup`, `Avatar`, `Image`, `IllustratedMessage`, and `LabeledValue` are exported with focused smoke tests. Deeper API parity remains audit work. | Later |
 | Color tools | `ColorArea`, `ColorEditor`, `ColorField`, `ColorPicker`, `ColorSlider`, `ColorSwatch`, `ColorSwatchPicker`, `ColorWheel` | defer | High effort and dependent on gestures/SVG. | Later |
 | Drag/drop/file | `DropZone`, `FileTrigger`, `useDragAndDrop`, drop item helpers | web-only/defer | Replace with Expo document picker/share sheet/gesture reorder when scoped. | Later |
 | DOM utilities | `SSRProvider`, `VisuallyHidden`, `Collection`, `useFilter`, locale/formatter hooks from `react-aria` | web-only or native adapter | Do not depend on `react-aria` at runtime. Provide native equivalents only when needed. | Foundation/later |
@@ -62,3 +62,12 @@ Status values:
 2. Prioritize API review, accessibility behavior, and parity gaps over adding more breadth.
 3. Fill missing web-parity pieces such as `DateField`, `TimeField`, and deeper table/menu semantics before broadening scope further.
 4. Keep validating changes through the package Jest project and the Expo smoke app.
+
+## Next Implementation Pass
+
+Focus the next round of work on the smallest high-value gaps that still block a credible native alpha:
+
+1. Deepen `DateField` and `TimeField` parity beyond text parsing, including locale-aware formatting and segment-like editing.
+2. Tighten overlay behavior for full focus trapping and restore-focus parity.
+3. Broaden coverage for provider defaults and core accessibility-state behavior where tests are still thin.
+4. Keep the Expo smoke app aligned with the exported surface so regressions show up early.

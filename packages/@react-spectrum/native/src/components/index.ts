@@ -1,4 +1,6 @@
+export * from './accordion';
 export * from './badge';
+export * from './breadcrumbs';
 export * from './button';
 export * from './calendar';
 export * from './combobox';
@@ -12,7 +14,10 @@ export * from './checkbox';
 export * from './dialog';
 export * from './divider';
 export * from './inlinealert';
+export * from './image';
+export * from './illustratedmessage';
 export * from './layout';
+export * from './labeledvalue';
 export * from './modal';
 export * from './progress';
 export * from './radio';
