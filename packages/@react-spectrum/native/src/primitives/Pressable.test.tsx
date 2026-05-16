@@ -33,4 +33,14 @@ describe('Pressable primitive', () => {
     );
     expect(getByTestId('press').props.className).toContain('opacity-disabled');
   });
+
+  it('resolves style props without forwarding raw style prop keys', () => {
+    let {getByTestId} = renderWithProvider(
+      <Pressable margin="400" testID="press" width={100} />
+    );
+    let press = getByTestId('press');
+    expect(press.props.margin).toBeUndefined();
+    expect(press.props.width).toBeUndefined();
+    expect(press.props.style[0]).toMatchObject({margin: 16, width: 100});
+  });
 });

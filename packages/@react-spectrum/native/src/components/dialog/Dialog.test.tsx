@@ -10,7 +10,7 @@ describe('Dialog', () => {
       </Dialog>
     );
     let modal = root.findAll(
-      n => typeof n.type === 'string' && (n.props as any).testID === 'dlg'
+      n => typeof n.type === 'string' && (n.props as any).testID === 'dlg-modal'
     )[0];
     expect(modal.props.visible).toBe(true);
   });

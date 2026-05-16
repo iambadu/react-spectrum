@@ -1,6 +1,7 @@
 import React from 'react';
 import {act} from 'react-test-renderer';
-import {Item} from 'react-stately/Item';
+import {Keyboard} from 'react-native';
+import {Item} from '@react-stately/collections';
 import {fireEvent, renderWithProvider} from '../../test-utils/renderWithProvider';
 import {ComboBox} from './ComboBox';
 
@@ -28,6 +29,7 @@ describe('ComboBox', () => {
   });
 
   it('opens tray on focus', () => {
+    let dismissSpy = jest.spyOn(Keyboard, 'dismiss').mockImplementation(() => {});
     let {root} = renderWithProvider(
       <ComboBox label="Fruit">
         <Item key="apple">Apple</Item>
@@ -35,6 +37,8 @@ describe('ComboBox', () => {
     );
     act(() => { findInput(root).props.onFocus(); });
     expect(findModal(root).props.visible).toBe(true);
+    expect(dismissSpy).toHaveBeenCalled();
+    dismissSpy.mockRestore();
   });
 
   it('calls onInputChange on text change', () => {

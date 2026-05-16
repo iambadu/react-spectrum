@@ -43,14 +43,17 @@ describe('Tray', () => {
     expect(onOpenChange).not.toHaveBeenCalled();
   });
 
-  it('renders dialog role on inner content', () => {
+  it('marks inner content as an accessible modal surface', () => {
     let {root} = renderWithProvider(
       <Tray isOpen onOpenChange={() => {}} testID="t">
         <></>
       </Tray>
     );
     let dialog = root.findAll(
-      n => typeof n.type === 'string' && (n.props as any).accessibilityRole === 'dialog'
+      n =>
+        typeof n.type === 'string' &&
+        (n.props as any).accessibilityLabel === 'Dialog' &&
+        (n.props as any).accessibilityViewIsModal === true
     )[0];
     expect(dialog).toBeDefined();
   });

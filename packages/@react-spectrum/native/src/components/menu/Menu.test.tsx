@@ -1,6 +1,6 @@
 import React from 'react';
 import {act} from 'react-test-renderer';
-import {Item} from 'react-stately/Item';
+import {Item} from '@react-stately/collections';
 import {fireEvent, renderWithProvider} from '../../test-utils/renderWithProvider';
 import {ActionButton} from '../button/ActionButton';
 import {ActionMenu, Menu, MenuItem, MenuTrigger} from './Menu';
