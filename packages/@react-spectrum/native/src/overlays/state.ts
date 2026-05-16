@@ -1,2 +1,2 @@
-export {useOverlayTriggerState} from 'react-stately/useOverlayTriggerState';
-export type {OverlayTriggerState, OverlayTriggerProps} from 'react-stately/useOverlayTriggerState';
+export {useOverlayTriggerState} from '@react-stately/overlays';
+export type {OverlayTriggerState, OverlayTriggerProps} from '@react-stately/overlays';

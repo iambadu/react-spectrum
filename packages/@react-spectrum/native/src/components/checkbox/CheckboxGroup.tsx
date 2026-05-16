@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
 import {View as RNView} from 'react-native';
-import {useCheckboxGroupState} from 'react-stately/useCheckboxGroupState';
+import {useCheckboxGroupState} from '@react-stately/checkbox';
 import {Text, View} from '../../primitives';
 import {useProviderProps} from '../../provider';
 import {mapAccessibilityProps} from '../../accessibility';

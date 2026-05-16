@@ -141,10 +141,9 @@ export function TableView<T extends Record<string, unknown> = Record<string, unk
       )}
       <ScrollView
         accessibilityLabel={ariaLabel}
-        accessibilityRole="list"
         horizontal
         showsHorizontalScrollIndicator={false}>
-        <View>
+        <View accessibilityRole="list">
           {/* Header row */}
           <View
             className="flex-row border-b-2 border-border bg-surface"
@@ -187,7 +186,9 @@ export function TableView<T extends Record<string, unknown> = Record<string, unk
 
             return (
               <Pressable
-                accessibilityRole="none"
+                accessibilityRole={
+                  selectionMode !== 'none' ? 'checkbox' : onAction ? 'button' : 'none'
+                }
                 accessibilityState={{
                   disabled: isDisabled || undefined,
                   selected: isSelected || undefined

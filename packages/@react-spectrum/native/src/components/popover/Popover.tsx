@@ -1,5 +1,5 @@
 import React, {forwardRef, useCallback, useEffect, useState} from 'react';
-import {Modal as RNModal, View as RNView} from 'react-native';
+import {type LayoutChangeEvent, Modal as RNModal, View as RNView} from 'react-native';
 import {FocusScope, Overlay, Pressable, View} from '../../primitives';
 import {cn} from '../../styles/cn';
 
@@ -29,7 +29,8 @@ export interface PopoverProps {
 function computeStyle(
   anchor: PopoverAnchorRect | null | undefined,
   placement: PopoverPlacement,
-  offset: number
+  offset: number,
+  contentHeight: number
 ) {
   if (!anchor) {
     return {alignSelf: 'center' as const};
@@ -40,7 +41,7 @@ function computeStyle(
         bottom: undefined,
         left: anchor.x,
         position: 'absolute' as const,
-        top: Math.max(0, anchor.y - offset)
+        top: Math.max(0, anchor.y - contentHeight - offset)
       };
     case 'bottom':
       return {
@@ -82,6 +83,7 @@ export const Popover = forwardRef<React.ElementRef<typeof RNView>, PopoverProps>
     let [resolvedAnchor, setResolvedAnchor] = useState<PopoverAnchorRect | null>(
       anchorRect ?? null
     );
+    let [contentHeight, setContentHeight] = useState(0);
 
     useEffect(() => {
       setResolvedAnchor(anchorRect ?? null);
@@ -97,7 +99,11 @@ export const Popover = forwardRef<React.ElementRef<typeof RNView>, PopoverProps>
       }
     }, [close, isDismissable]);
 
-    let positionStyle = computeStyle(resolvedAnchor, placement, offset);
+    let handleContentLayout = useCallback((event: LayoutChangeEvent) => {
+      setContentHeight(event.nativeEvent.layout.height);
+    }, []);
+
+    let positionStyle = computeStyle(resolvedAnchor, placement, offset, contentHeight);
 
     return (
       <RNModal
@@ -119,11 +125,13 @@ export const Popover = forwardRef<React.ElementRef<typeof RNView>, PopoverProps>
               onPress={handleScrimPress}
             />
             <View
-              accessibilityRole={'dialog' as never}
+              accessibilityLabel="Dialog"
+              accessibilityViewIsModal
               className={cn(
                 'min-w-[160px] rounded-md border border-border bg-surface p-300 shadow-md',
                 contentClassName
               )}
+              onLayout={handleContentLayout}
               ref={ref}
               style={positionStyle}>
               {children}

@@ -1,6 +1,6 @@
 import React, {forwardRef, useCallback} from 'react';
 import {Pressable as RNPressable} from 'react-native';
-import {useSelectState} from 'react-stately/useSelectState';
+import {useSelectState} from '@react-stately/select';
 import type {Key} from '@react-types/shared';
 import type {CollectionBase} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';

@@ -19,23 +19,46 @@ export function Provider(props: NativeProviderProps) {
     children,
     colorScheme = parent.colorScheme,
     direction = parent.direction ?? (I18nManager.isRTL ? 'rtl' : 'ltr'),
+    isDisabled = parent.isDisabled,
+    isEmphasized = parent.isEmphasized,
+    isQuiet = parent.isQuiet,
+    isReadOnly = parent.isReadOnly,
+    isRequired = parent.isRequired,
     locale = parent.locale,
     scale = parent.scale,
     theme = parent.theme,
-    ...defaults
+    validationState = parent.validationState
   } = props;
 
   let value = useMemo<NativeProviderContext>(
     () => ({
       ...parent,
-      ...defaults,
       colorScheme,
       direction,
+      isDisabled,
+      isEmphasized,
+      isQuiet,
+      isReadOnly,
+      isRequired,
       locale,
       scale,
-      theme
+      theme,
+      validationState
     }),
-    [colorScheme, defaults, direction, locale, parent, scale, theme]
+    [
+      colorScheme,
+      direction,
+      isDisabled,
+      isEmphasized,
+      isQuiet,
+      isReadOnly,
+      isRequired,
+      locale,
+      parent,
+      scale,
+      theme,
+      validationState
+    ]
   );
 
   return (

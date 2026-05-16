@@ -45,7 +45,7 @@ export const Modal = forwardRef<React.ElementRef<typeof RNView>, ModalProps>(
       <RNModal
         animationType={animationType}
         onRequestClose={close}
-        testID={testID}
+        testID={testID ? `${testID}-modal` : undefined}
         transparent
         visible={isOpen}>
         <FocusScope autoFocus contain restoreFocus>
@@ -61,10 +61,11 @@ export const Modal = forwardRef<React.ElementRef<typeof RNView>, ModalProps>(
               onPress={handleScrimPress}
             />
             <View
-              accessibilityRole={'dialog' as never}
+              accessibilityLabel="Dialog"
               accessibilityViewIsModal
               className={cn('max-w-[90%] rounded-md bg-surface p-400 shadow-lg', contentClassName)}
-              ref={ref}>
+              ref={ref}
+              testID={testID}>
               {children}
             </View>
           </Overlay>

@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
 import {Pressable as RNPressable} from 'react-native';
-import {useToggleState} from 'react-stately/useToggleState';
+import {useToggleState} from '@react-stately/toggle';
 import {mapAccessibilityProps} from '../../accessibility';
 import {Pressable} from '../../primitives';
 import {useProvider, useProviderProps} from '../../provider';

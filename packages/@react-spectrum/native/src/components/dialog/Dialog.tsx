@@ -18,7 +18,7 @@ export const Dialog = forwardRef<React.ElementRef<typeof RNView>, DialogProps>(
     return (
       <Modal
         {...modalProps}
-        contentClassName={cn('w-[480px] gap-300', contentClassName)}
+        contentClassName={cn('max-w-[90%] w-full gap-300', contentClassName)}
         ref={ref}>
         {children}
       </Modal>

@@ -1,7 +1,6 @@
 import React, {useCallback} from 'react';
 import {ScrollView} from 'react-native';
-import {useListState} from 'react-stately/useListState';
-import type {ListProps} from 'react-stately/useListState';
+import {useListState, type ListProps} from '@react-stately/list';
 import type {Key, Node} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';
 import {cn} from '../../styles/cn';
@@ -138,29 +137,30 @@ export function ListView<T extends object = object>(props: ListViewProps<T>) {
       )}
       <ScrollView
         accessibilityLabel={ariaLabel}
-        accessibilityLabelledBy={ariaLabelledby}
-        accessibilityRole="list">
-        {Array.from(state.collection).map(node => {
-          let isSelected = state.selectionManager.isSelected(node.key);
-          let isDisabled =
-            state.disabledKeys.has(node.key) ||
-            (disabledKeysProp
-              ? Array.from(disabledKeysProp).includes(node.key)
-              : false);
+        accessibilityLabelledBy={ariaLabelledby}>
+        <View accessibilityRole="list">
+          {Array.from(state.collection).map(node => {
+            let isSelected = state.selectionManager.isSelected(node.key);
+            let isDisabled =
+              state.disabledKeys.has(node.key) ||
+              (disabledKeysProp
+                ? Array.from(disabledKeysProp).includes(node.key)
+                : false);
 
-          return (
-            <ListViewItem
-              isDisabled={isDisabled}
-              isSelected={isSelected}
-              key={node.key}
-              onPress={() => handleItemPress(node.key)}
-              showCheckbox={showCheckbox}
-              testID={`listview-item-${String(node.key)}`}
-              textValue={node.textValue}>
-              {renderItem ? renderItem(node) : defaultRenderItem(node)}
-            </ListViewItem>
-          );
-        })}
+            return (
+              <ListViewItem
+                isDisabled={isDisabled}
+                isSelected={isSelected}
+                key={node.key}
+                onPress={() => handleItemPress(node.key)}
+                showCheckbox={showCheckbox}
+                testID={`listview-item-${String(node.key)}`}
+                textValue={node.textValue}>
+                {renderItem ? renderItem(node) : defaultRenderItem(node)}
+              </ListViewItem>
+            );
+          })}
+        </View>
       </ScrollView>
     </View>
   );

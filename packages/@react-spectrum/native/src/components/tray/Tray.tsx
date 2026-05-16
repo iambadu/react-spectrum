@@ -59,7 +59,7 @@ export const Tray = forwardRef<React.ElementRef<typeof RNView>, TrayProps>(
               onPress={handleScrimPress}
             />
             <View
-              accessibilityRole={'dialog' as never}
+              accessibilityLabel="Dialog"
               accessibilityViewIsModal
               className={cn(
                 'rounded-t-lg bg-surface px-400 pb-600 pt-300',

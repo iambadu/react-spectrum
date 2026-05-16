@@ -1,7 +1,6 @@
 import React, {forwardRef, useCallback} from 'react';
 import {TextInput as RNTextInput} from 'react-native';
-import {useNumberFieldState} from 'react-stately/useNumberFieldState';
-import type {NumberFieldProps} from 'react-stately/useNumberFieldState';
+import {useNumberFieldState, type NumberFieldProps} from '@react-stately/numberfield';
 import {Pressable, Text, View} from '../../primitives';
 import {useProvider, useProviderProps} from '../../provider';
 import {cn} from '../../styles/cn';

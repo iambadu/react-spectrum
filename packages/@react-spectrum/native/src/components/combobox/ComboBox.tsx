@@ -1,6 +1,6 @@
-import React, {forwardRef, useCallback, useRef} from 'react';
-import {TextInput as RNTextInput} from 'react-native';
-import {useComboBoxState} from 'react-stately/useComboBoxState';
+import React, {forwardRef, useCallback} from 'react';
+import {Keyboard, TextInput as RNTextInput} from 'react-native';
+import {useComboBoxState} from '@react-stately/combobox';
 import type {Key} from '@react-types/shared';
 import type {CollectionBase} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';
@@ -89,6 +89,7 @@ export const ComboBox = forwardRef<
 
   let handleFocus = useCallback(() => {
     state.open();
+    Keyboard.dismiss();
   }, [state]);
 
   let handleTrayClose = useCallback(() => {
