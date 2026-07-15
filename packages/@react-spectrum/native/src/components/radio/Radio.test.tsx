@@ -37,4 +37,19 @@ describe('RadioGroup', () => {
     );
     expect(findRadio(root, 'a').props.accessibilityState.checked).toBe(true);
   });
+
+  it('propagates aria-invalid to the group and radios', () => {
+    let {root} = renderWithProvider(
+      <RadioGroup isInvalid label="Choose" testID="group" value="a">
+        <Radio testID="a" value="a">
+          A
+        </Radio>
+      </RadioGroup>
+    );
+    let group = root.findAll(
+      (n: any) => typeof n.type === 'string' && n.props && n.props.testID === 'group'
+    )[0];
+    expect(group.props['aria-invalid']).toBe(true);
+    expect(findRadio(root, 'a').props['aria-invalid']).toBe(true);
+  });
 });

@@ -1,5 +1,5 @@
 import {createContext, useContext} from 'react';
-import type {CheckboxGroupState} from 'react-stately/useCheckboxGroupState';
+import type {CheckboxGroupState} from '@react-stately/checkbox';
 
 export interface CheckboxGroupContextValue {
   isDisabled?: boolean;

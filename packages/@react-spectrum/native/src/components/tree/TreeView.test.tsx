@@ -1,7 +1,6 @@
 import React from 'react';
 import {act} from 'react-test-renderer';
-import {Item} from 'react-stately/Item';
-import {Section} from 'react-stately/Section';
+import {Item, Section} from '@react-stately/collections';
 import {renderWithProvider} from '../../test-utils/renderWithProvider';
 import {TreeView} from './TreeView';
 
@@ -16,7 +15,7 @@ describe('TreeView', () => {
     let srcNode = root.findAll(
       n =>
         typeof n.type === 'string' &&
-        (n.props as any).testID === 'tv-item-src'
+        (n.props as any).testID === 'tv-row-src'
     )[0];
     expect(srcNode).toBeDefined();
     let distNode = root.findAll(
@@ -76,7 +75,7 @@ describe('TreeView', () => {
     let srcNode = root.findAll(
       n =>
         typeof n.type === 'string' &&
-        (n.props as any).testID === 'tv-item-src'
+        (n.props as any).testID === 'tv-row-src'
     )[0];
     act(() => {
       srcNode.props.onPress();
@@ -99,7 +98,7 @@ describe('TreeView', () => {
     let srcNode = root.findAll(
       n =>
         typeof n.type === 'string' &&
-        (n.props as any).testID === 'tv-item-src'
+        (n.props as any).testID === 'tv-row-src'
     )[0];
     act(() => {
       srcNode.props.onPress();
@@ -123,7 +122,7 @@ describe('TreeView', () => {
     let distNode = root.findAll(
       n =>
         typeof n.type === 'string' &&
-        (n.props as any).testID === 'tv-item-dist'
+        (n.props as any).testID === 'tv-row-dist'
     )[0];
     expect(distNode.props.accessibilityState.disabled).toBe(true);
   });
@@ -142,7 +141,7 @@ describe('TreeView', () => {
     let srcNode = root.findAll(
       n =>
         typeof n.type === 'string' &&
-        (n.props as any).testID === 'tv-item-src'
+        (n.props as any).testID === 'tv-row-src'
     )[0];
     expect(srcNode.props.accessibilityState.selected).toBe(true);
   });

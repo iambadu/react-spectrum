@@ -197,4 +197,26 @@ describe('TableView', () => {
     )[0];
     expect(row.props.accessibilityState.selected).toBe(true);
   });
+
+  it('uses checkbox role for selectable rows and button role for action rows', () => {
+    let {root} = renderWithProvider(
+      <TableView columns={COLUMNS} items={ITEMS} selectionMode="multiple" testID="tv" />
+    );
+    let selectableRow = root.findAll(
+      n =>
+        typeof n.type === 'string' &&
+        (n.props as any).testID === 'tableview-row-u1'
+    )[0];
+    expect(selectableRow.props.accessibilityRole).toBe('checkbox');
+
+    ({root} = renderWithProvider(
+      <TableView columns={COLUMNS} items={ITEMS} onAction={() => {}} testID="tv" />
+    ));
+    let actionRow = root.findAll(
+      n =>
+        typeof n.type === 'string' &&
+        (n.props as any).testID === 'tableview-row-u1'
+    )[0];
+    expect(actionRow.props.accessibilityRole).toBe('button');
+  });
 });

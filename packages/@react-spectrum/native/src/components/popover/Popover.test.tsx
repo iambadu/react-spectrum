@@ -31,7 +31,7 @@ describe('Popover', () => {
       </Popover>
     );
     let dialog = root.findAll(
-      n => typeof n.type === 'string' && (n.props as any).accessibilityRole === 'dialog'
+      n => typeof n.type === 'string' && (n.props as any).accessibilityLabel === 'Dialog'
     )[0];
     let collected: Record<string, unknown> = {};
     let walk = (s: unknown) => {
@@ -46,6 +46,41 @@ describe('Popover', () => {
     };
     walk(dialog.props.style);
     expect(collected.top).toBe(228);
+    expect(collected.left).toBe(50);
+  });
+
+  it('positions top placement above the anchor after content layout', () => {
+    let {root} = renderWithProvider(
+      <Popover
+        anchorRect={{height: 24, width: 100, x: 50, y: 200}}
+        isOpen
+        offset={4}
+        onOpenChange={() => {}}
+        placement="top"
+        testID="p">
+        <></>
+      </Popover>
+    );
+    let dialog = root.findAll(
+      n => typeof n.type === 'string' && (n.props as any).accessibilityLabel === 'Dialog'
+    )[0];
+    fireEvent(dialog, 'onLayout', {nativeEvent: {layout: {height: 80}}});
+    dialog = root.findAll(
+      n => typeof n.type === 'string' && (n.props as any).accessibilityLabel === 'Dialog'
+    )[0];
+    let collected: Record<string, unknown> = {};
+    let walk = (s: unknown) => {
+      if (s == null) {
+        return;
+      }
+      if (Array.isArray(s)) {
+        s.forEach(walk);
+      } else if (typeof s === 'object') {
+        Object.assign(collected, s);
+      }
+    };
+    walk(dialog.props.style);
+    expect(collected.top).toBe(116);
     expect(collected.left).toBe(50);
   });
 

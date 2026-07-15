@@ -29,14 +29,31 @@ describe('Tray', () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
-  it('renders dialog role on inner content', () => {
+  it('does not close on hardware back when not dismissable', () => {
+    let onOpenChange = jest.fn();
+    let {root} = renderWithProvider(
+      <Tray isDismissable={false} isOpen onOpenChange={onOpenChange} testID="t">
+        <></>
+      </Tray>
+    );
+    let host = root.findAll(
+      n => typeof n.type === 'string' && (n.props as any).testID === 't'
+    )[0];
+    fireEvent(host, 'onRequestClose');
+    expect(onOpenChange).not.toHaveBeenCalled();
+  });
+
+  it('marks inner content as an accessible modal surface', () => {
     let {root} = renderWithProvider(
       <Tray isOpen onOpenChange={() => {}} testID="t">
         <></>
       </Tray>
     );
     let dialog = root.findAll(
-      n => typeof n.type === 'string' && (n.props as any).accessibilityRole === 'dialog'
+      n =>
+        typeof n.type === 'string' &&
+        (n.props as any).accessibilityLabel === 'Dialog' &&
+        (n.props as any).accessibilityViewIsModal === true
     )[0];
     expect(dialog).toBeDefined();
   });

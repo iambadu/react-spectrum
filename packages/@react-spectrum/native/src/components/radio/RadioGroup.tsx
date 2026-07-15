@@ -1,6 +1,6 @@
 import React, {forwardRef} from 'react';
 import {View as RNView} from 'react-native';
-import {useRadioGroupState} from 'react-stately/useRadioGroupState';
+import {useRadioGroupState} from '@react-stately/radio';
 import {Text, View} from '../../primitives';
 import {useProviderProps} from '../../provider';
 import {mapAccessibilityProps} from '../../accessibility';

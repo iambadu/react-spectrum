@@ -40,4 +40,37 @@ describe('Switch', () => {
     fireEvent.press(findSwitch(root));
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it('does not toggle when readOnly', () => {
+    let onChange = jest.fn();
+    let {root} = renderWithProvider(
+      <Switch isReadOnly onChange={onChange} testID="sw">
+        Notify
+      </Switch>
+    );
+    fireEvent.press(findSwitch(root));
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('reports invalid via aria-invalid', () => {
+    let {root} = renderWithProvider(
+      <Switch isInvalid testID="sw">
+        Notify
+      </Switch>
+    );
+    expect(findSwitch(root).props['aria-invalid']).toBe(true);
+  });
+
+  it('inherits disabled state from Provider', () => {
+    let onChange = jest.fn();
+    let {root} = renderWithProvider(
+      <Switch onChange={onChange} testID="sw">
+        Notify
+      </Switch>,
+      {providerProps: {isDisabled: true}}
+    );
+    fireEvent.press(findSwitch(root));
+    expect(onChange).not.toHaveBeenCalled();
+    expect(findSwitch(root).props.accessibilityState.disabled).toBe(true);
+  });
 });

@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
-import {useListState} from 'react-stately/useListState';
-import {useMenuTriggerState} from 'react-stately/useMenuTriggerState';
+import {useListState} from '@react-stately/list';
+import {useMenuTriggerState} from '@react-stately/menu';
 import type {Key} from '@react-types/shared';
 import type {CollectionBase} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';

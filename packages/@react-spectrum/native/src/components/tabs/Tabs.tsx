@@ -1,7 +1,6 @@
 import React from 'react';
 import {ScrollView} from 'react-native';
-import {useTabListState} from 'react-stately/useTabListState';
-import type {TabListProps} from 'react-stately/useTabListState';
+import {useTabListState, type TabListProps} from '@react-stately/tabs';
 import type {Key} from '@react-types/shared';
 import type {CollectionBase} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';

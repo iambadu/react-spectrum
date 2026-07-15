@@ -120,6 +120,7 @@ const AccessibilityInfo = {
   isScreenReaderEnabled: () => Promise.resolve(false),
   addEventListener: () => ({remove: () => {}}),
   removeEventListener: () => {},
+  setAccessibilityFocus: () => {},
   announceForAccessibility: () => {}
 };
 

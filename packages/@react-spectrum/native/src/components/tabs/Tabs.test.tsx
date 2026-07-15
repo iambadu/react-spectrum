@@ -1,6 +1,6 @@
 import React from 'react';
 import {act} from 'react-test-renderer';
-import {Item} from 'react-stately/Item';
+import {Item} from '@react-stately/collections';
 import {renderWithProvider} from '../../test-utils/renderWithProvider';
 import {Text} from '../../primitives';
 import {Tabs} from './Tabs';

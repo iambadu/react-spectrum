@@ -41,6 +41,21 @@ describe('Calendar', () => {
     );
     expect(todayNodes.length).toBeGreaterThanOrEqual(0);
   });
+
+  it('derives day headers from locale and first day of week', () => {
+    let {root} = renderWithProvider(
+      <Calendar aria-label="Pick date" locale="de-DE" testID="cal" />
+    );
+    let labels = root.findAll(
+      n =>
+        typeof n.type === 'string' &&
+        n.type === 'Text' &&
+        typeof (n.props as any).children === 'string'
+    ).map(n => (n.props as any).children);
+
+    expect(labels).toContain('Mo');
+    expect(labels.indexOf('Mo')).toBeLessThan(labels.indexOf('Di'));
+  });
 });
 
 describe('DatePicker', () => {

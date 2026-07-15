@@ -2,7 +2,7 @@ import React, {forwardRef} from 'react';
 import {Pressable as RNPressable, type PressableProps} from 'react-native';
 import {useProvider} from '../provider';
 import {cn} from '../styles/cn';
-import {resolveStyleProps} from '../styles/styleProps';
+import {omitNativeStyleProps, resolveStyleProps} from '../styles/styleProps';
 import type {SpectrumPressableProps} from './types';
 
 const UniwindPressable = RNPressable as any;
@@ -13,12 +13,13 @@ export const Pressable = forwardRef<React.ElementRef<typeof RNPressable>, Spectr
     let provider = useProvider();
     let resolvedDisabled = disabled || isDisabled || provider.isDisabled;
     let resolvedStyle = resolveStyleProps(otherProps, provider);
+    let safeOtherProps = omitNativeStyleProps(otherProps);
 
     return (
       <UniwindPressable
-        {...otherProps}
+        {...safeOtherProps}
         accessibilityState={{
-          ...otherProps.accessibilityState,
+          ...safeOtherProps.accessibilityState,
           disabled: resolvedDisabled || undefined
         }}
         className={cn(resolvedDisabled && 'opacity-disabled', className)}

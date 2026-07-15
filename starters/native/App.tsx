@@ -1,14 +1,24 @@
 import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
+import {CalendarDate, Time} from '@internationalized/date';
 import {Item} from 'react-stately/Item';
 import {
+  Accordion,
   AlertDialog,
   Badge,
+  Breadcrumbs,
   Button,
   Checkbox,
+  DateField,
+  Disclosure,
+  DisclosurePanel,
+  DisclosureTitle,
   Dialog,
   Heading,
+  Image,
+  IllustratedMessage,
   InlineAlert,
+  LabeledValue,
   ListBox,
   Meter,
   Modal,
@@ -23,6 +33,7 @@ import {
   Switch,
   Text,
   TextField,
+  TimeField,
   ToastContainer,
   ToastQueue,
   Tooltip,
@@ -73,6 +84,8 @@ export default function App() {
             description="TextField uses the shared Field foundation."
           />
           <SearchField label="Search components" placeholder="Button, Switch, Meter" />
+          <DateField label="Launch date" defaultValue={new CalendarDate(2026, 5, 10)} />
+          <TimeField label="Reminder time" defaultValue={new Time(9, 30)} />
         </View>
 
         <View className="gap-300">
@@ -125,6 +138,20 @@ export default function App() {
 
         <View className="gap-300">
           <Heading level={2}>Collections</Heading>
+          <Breadcrumbs
+            items={[
+              {key: 'home', label: 'Home'},
+              {key: 'native', label: 'Native'}
+            ]}
+          />
+          <Accordion defaultExpandedKeys={['summary']}>
+            <Disclosure id="summary">
+              <DisclosureTitle>Native package status</DisclosureTitle>
+              <DisclosurePanel>
+                Accordion and navigation/data display surfaces are wired into the smoke app.
+              </DisclosurePanel>
+            </Disclosure>
+          </Accordion>
           <Picker
             label="Colour scheme"
             onSelectionChange={key => setPickerValue(String(key))}
@@ -148,12 +175,24 @@ export default function App() {
         </View>
 
         <InlineAlert heading="Step 12 done" variant="positive">
-          ListBox and Picker wired with react-stately. Menu, Tabs, ComboBox, and Table remain stubs.
+          ListBox, Picker, DateField, and TimeField are wired into the native smoke surface.
         </InlineAlert>
 
         <View className="flex-row flex-wrap gap-200">
           <Badge variant="accent">alpha</Badge>
           <StatusLight variant="positive">Overlay foundation landed</StatusLight>
+        </View>
+
+        <View className="gap-300">
+          <Image
+            alt="React Spectrum native placeholder"
+            className="h-2400 w-full"
+            source={{uri: 'https://react-spectrum.adobe.com/react-spectrum/logo.svg'}}
+          />
+          <LabeledValue label="Package" value="@react-spectrum/native" />
+          <IllustratedMessage title="No blockers">
+            Native smoke surface is ready for another validation pass.
+          </IllustratedMessage>
         </View>
 
         <Modal isOpen={isModalOpen} onOpenChange={setModalOpen}>

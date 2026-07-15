@@ -50,4 +50,25 @@ describe('Button', () => {
       jest.useRealTimers();
     }
   });
+
+  it('does not fire onPress while pending', () => {
+    let onPress = jest.fn();
+    let {getByTestId} = renderWithProvider(
+      <Button isPending onPress={onPress} testID="btn" variant="accent">
+        Save
+      </Button>
+    );
+    fireEvent.press(getByTestId('btn'));
+    expect(onPress).not.toHaveBeenCalled();
+    expect(getByTestId('btn').props.accessibilityState.disabled).toBe(true);
+  });
+
+  it('adds pending context to an explicit accessibility label', () => {
+    let {getByTestId} = renderWithProvider(
+      <Button accessibilityLabel="Save changes" isPending testID="btn" variant="accent">
+        Save
+      </Button>
+    );
+    expect(getByTestId('btn').props.accessibilityLabel).toBe('Save changes Pending');
+  });
 });

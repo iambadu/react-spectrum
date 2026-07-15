@@ -32,20 +32,20 @@ export const Modal = forwardRef<React.ElementRef<typeof RNView>, ModalProps>(
     } = props;
 
     let close = useCallback(() => {
-      onOpenChange?.(false);
-    }, [onOpenChange]);
+      if (isDismissable) {
+        onOpenChange?.(false);
+      }
+    }, [isDismissable, onOpenChange]);
 
     let handleScrimPress = useCallback(() => {
-      if (isDismissable) {
-        close();
-      }
-    }, [close, isDismissable]);
+      close();
+    }, [close]);
 
     return (
       <RNModal
         animationType={animationType}
         onRequestClose={close}
-        testID={testID}
+        testID={testID ? `${testID}-modal` : undefined}
         transparent
         visible={isOpen}>
         <FocusScope autoFocus contain restoreFocus>
@@ -61,10 +61,11 @@ export const Modal = forwardRef<React.ElementRef<typeof RNView>, ModalProps>(
               onPress={handleScrimPress}
             />
             <View
-              accessibilityRole={'dialog' as never}
+              accessibilityLabel="Dialog"
               accessibilityViewIsModal
               className={cn('max-w-[90%] rounded-md bg-surface p-400 shadow-lg', contentClassName)}
-              ref={ref}>
+              ref={ref}
+              testID={testID}>
               {children}
             </View>
           </Overlay>

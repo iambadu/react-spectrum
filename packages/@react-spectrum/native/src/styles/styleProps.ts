@@ -40,6 +40,52 @@ export interface NativeStyleProps {
   width?: DimensionValue;
 }
 
+export const nativeStylePropKeys = [
+  'alignSelf',
+  'backgroundColor',
+  'borderColor',
+  'borderRadius',
+  'borderWidth',
+  'flex',
+  'flexGrow',
+  'flexShrink',
+  'height',
+  'isHidden',
+  'margin',
+  'marginBottom',
+  'marginEnd',
+  'marginStart',
+  'marginTop',
+  'marginX',
+  'marginY',
+  'maxHeight',
+  'maxWidth',
+  'minHeight',
+  'minWidth',
+  'overflow',
+  'padding',
+  'paddingBottom',
+  'paddingEnd',
+  'paddingStart',
+  'paddingTop',
+  'paddingX',
+  'paddingY',
+  'width'
+] as const satisfies ReadonlyArray<keyof NativeStyleProps>;
+
+let nativeStylePropKeySet = new Set<string>(nativeStylePropKeys);
+
+export function omitNativeStyleProps<T extends Record<string, unknown>>(props: T) {
+  let safeProps: Record<string, unknown> = {};
+  for (let key in props) {
+    if (!nativeStylePropKeySet.has(key)) {
+      safeProps[key] = props[key];
+    }
+  }
+
+  return safeProps as Omit<T, keyof NativeStyleProps>;
+}
+
 interface ResolveStyleOptions {
   direction?: Direction;
   scale?: Scale;

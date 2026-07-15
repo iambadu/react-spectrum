@@ -1,8 +1,7 @@
 import React, {forwardRef, useCallback} from 'react';
 import {ScrollView, type ScrollViewProps} from 'react-native';
-import {useListState} from 'react-stately/useListState';
+import {useListState, type ListProps} from '@react-stately/list';
 import type {Key, Node} from '@react-types/shared';
-import type {ListProps} from 'react-stately/useListState';
 import {Pressable, Text, View} from '../../primitives';
 import {cn} from '../../styles/cn';
 

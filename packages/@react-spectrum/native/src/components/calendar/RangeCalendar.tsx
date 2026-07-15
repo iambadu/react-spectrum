@@ -7,9 +7,11 @@ import {
   isSameMonth,
   today
 } from '@internationalized/date';
-import {useRangeCalendarState} from 'react-stately/useRangeCalendarState';
-import type {RangeCalendarProps} from 'react-stately/useRangeCalendarState';
-import type {DateValue} from 'react-stately/useCalendarState';
+import {
+  useRangeCalendarState,
+  type DateValue,
+  type RangeCalendarProps
+} from '@react-stately/calendar';
 import type {RangeValue} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';
 import {useProvider} from '../../provider';

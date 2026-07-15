@@ -19,6 +19,7 @@ The smoke app lives in `starters/native`. It is an Expo app that imports the wor
 - Provider and theme switching
 - Button
 - TextField and SearchField
+- DateField and TimeField
 - Checkbox
 - RadioGroup and Radio
 - Switch
@@ -26,7 +27,9 @@ The smoke app lives in `starters/native`. It is an Expo app that imports the wor
 - InlineAlert
 - Badge and StatusLight
 - Modal, Tray, AlertDialog, Popover, Tooltip, and Toast
+- Accordion and Breadcrumbs
 - Picker and ListBox
+- Image, IllustratedMessage, and LabeledValue
 
 Run it from the repo root:
 
@@ -45,3 +48,11 @@ The app is deliberately small. Its job is to catch packaging, import, theme, ove
 3. Core control accessibility-state tests for Button, TextField, Checkbox, Radio, Switch, Progress, and InlineAlert.
 4. Controlled/uncontrolled behavior tests for TextField and toggle controls.
 5. Continue broadening coverage for overlays, collections, and advanced inputs.
+
+## Next Checks To Keep In Sync
+
+When the package grows, update the smoke app and validation commands together so the docs stay useful:
+
+- add any new exported native component to `starters/native/App.tsx`
+- keep the package `test` command scoped to `packages/@react-spectrum/native`
+- re-run the smoke app after overlay, selection, or input changes

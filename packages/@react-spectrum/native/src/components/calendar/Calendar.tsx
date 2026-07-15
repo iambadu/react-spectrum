@@ -1,20 +1,17 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {
   CalendarDate,
   createCalendar,
   getWeeksInMonth,
   isSameDay,
   isSameMonth,
+  startOfWeek,
   today
 } from '@internationalized/date';
-import {useCalendarState} from 'react-stately/useCalendarState';
-import type {CalendarProps} from 'react-stately/useCalendarState';
-import type {DateValue} from 'react-stately/useCalendarState';
+import {useCalendarState, type CalendarProps, type DateValue} from '@react-stately/calendar';
 import {Pressable, Text, View} from '../../primitives';
 import {useProvider} from '../../provider';
 import {cn} from '../../styles/cn';
-
-const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 export interface NativeCalendarProps extends CalendarProps<DateValue> {
   className?: string;
@@ -32,6 +29,14 @@ export function Calendar(rawProps: NativeCalendarProps) {
     createCalendar,
     locale: resolvedLocale
   });
+
+  let dayNames = useMemo(() => {
+    let formatter = new Intl.DateTimeFormat(resolvedLocale, {weekday: 'short'});
+    let weekStart = startOfWeek(today(state.timeZone), resolvedLocale);
+    return Array.from({length: 7}, (_, index) =>
+      formatter.format(weekStart.add({days: index}).toDate(state.timeZone))
+    );
+  }, [resolvedLocale, state.timeZone]);
 
   let monthName = new Intl.DateTimeFormat(resolvedLocale, {
     month: 'long',
@@ -67,7 +72,7 @@ export function Calendar(rawProps: NativeCalendarProps) {
       </View>
 
       <View className="flex-row justify-around">
-        {DAYS.map(day => (
+        {dayNames.map(day => (
           <View className="flex-1 items-center py-100" key={day}>
             <Text className="text-100 font-medium text-textMuted">{day}</Text>
           </View>

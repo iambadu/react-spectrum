@@ -1,7 +1,6 @@
 import React, {useCallback} from 'react';
 import {ScrollView} from 'react-native';
-import {useTreeState} from 'react-stately/useTreeState';
-import type {TreeProps} from 'react-stately/useTreeState';
+import {useTreeState, type TreeProps} from '@react-stately/tree';
 import type {Key, Node} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';
 import {cn} from '../../styles/cn';
@@ -49,35 +48,21 @@ function TreeViewNode<T extends object>({
   let indent = depth * 16;
 
   return (
-    <Pressable
-      accessibilityLabel={node.textValue}
-      accessibilityRole="button"
-      accessibilityState={{
-        disabled: isDisabled || undefined,
-        expanded: hasChildren ? isExpanded : undefined,
-        selected: isSelected || undefined
-      }}
+    <View
       className={cn(
         'flex-row items-center gap-300 pr-300 min-h-[44px]',
         'border-b border-border',
         isSelected && 'bg-accentSubtle',
         isDisabled && 'opacity-disabled'
       )}
-      isDisabled={isDisabled}
-      onPress={() => {
-        onPress(node.key);
-        onAction?.(node.key);
-      }}
       style={{paddingLeft: 12 + indent}}
       testID={`${testIDPrefix ?? 'treeview'}-item-${String(node.key)}`}>
-      {/* Expand/collapse toggle */}
       <View className="w-5 items-center justify-center">
         {hasChildren ? (
           <Pressable
             accessibilityLabel={isExpanded ? 'Collapse' : 'Expand'}
             accessibilityRole="button"
-            onPress={e => {
-              // Stop propagation by handling toggle separately
+            onPress={() => {
               onToggle(node.key);
             }}
             testID={`${testIDPrefix ?? 'treeview'}-toggle-${String(node.key)}`}>
@@ -103,10 +88,26 @@ function TreeViewNode<T extends object>({
         </View>
       )}
 
-      <Text className="flex-1 text-200 text-text py-200">
-        {node.textValue || String(node.key)}
-      </Text>
-    </Pressable>
+      <Pressable
+        accessibilityLabel={node.textValue}
+        accessibilityRole="button"
+        accessibilityState={{
+          disabled: isDisabled || undefined,
+          expanded: hasChildren ? isExpanded : undefined,
+          selected: isSelected || undefined
+        }}
+        className="flex-1 min-h-[44px] justify-center"
+        isDisabled={isDisabled}
+        onPress={() => {
+          onPress(node.key);
+          onAction?.(node.key);
+        }}
+        testID={`${testIDPrefix ?? 'treeview'}-row-${String(node.key)}`}>
+        <Text className="text-200 text-text py-200">
+          {node.textValue || String(node.key)}
+        </Text>
+      </Pressable>
+    </View>
   );
 }
 
@@ -244,18 +245,19 @@ export function TreeView<T extends object = object>(props: TreeViewProps<T>) {
       )}
       <ScrollView
         accessibilityLabel={ariaLabel}
-        accessibilityLabelledBy={ariaLabelledby}
-        accessibilityRole="list">
-        {renderNodes(
-          state.collection,
-          0,
-          state,
-          handlePress,
-          handleToggle,
-          onAction,
-          showCheckbox,
-          testID
-        )}
+        accessibilityLabelledBy={ariaLabelledby}>
+        <View accessibilityRole="list">
+          {renderNodes(
+            state.collection,
+            0,
+            state,
+            handlePress,
+            handleToggle,
+            onAction,
+            showCheckbox,
+            testID
+          )}
+        </View>
       </ScrollView>
     </View>
   );

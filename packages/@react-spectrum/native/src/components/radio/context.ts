@@ -1,5 +1,5 @@
 import {createContext, useContext} from 'react';
-import type {RadioGroupState} from 'react-stately/useRadioGroupState';
+import type {RadioGroupState} from '@react-stately/radio';
 
 export interface RadioGroupContextValue {
   isDisabled?: boolean;

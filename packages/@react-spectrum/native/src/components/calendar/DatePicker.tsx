@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import type {DateValue} from 'react-stately/useCalendarState';
+import type {DateValue} from '@react-stately/calendar';
 import type {RangeValue} from '@react-types/shared';
 import {Pressable, Text, View} from '../../primitives';
 import {cn} from '../../styles/cn';
